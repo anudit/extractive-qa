@@ -1,0 +1,7 @@
+torch
+torchvision
+transformers
+PyPDF2
+requests
+beautifulsoup4
+tqdm
