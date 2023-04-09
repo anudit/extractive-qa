@@ -5,3 +5,10 @@ dbsmall.csv
 .DS_Store
 *.json
 *.csv
+*.xls
+*.XLS
+*.xlsx
+*.XLSX
+*.pdf
+/census/census_data
+/census/census_data_new

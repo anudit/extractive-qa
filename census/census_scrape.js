@@ -1,16 +1,24 @@
-import {  writeFile } from 'fs/promises';
+import { Readable } from 'stream'
+import { finished } from 'stream/promises'
+import fs from 'fs';
 
 async function downloadFiles(fileList = []){
 
     for (let index = 0; index < fileList.length; index++) {
         console.log(`Downloading ${index+1}/${fileList.length}:`, fileList[index])
-        const req = await fetch(fileList[index]);
-        const resp = await req.text();
-        const fn = fileList[index].split('/')
-        await writeFile(`./census_data/${fn[fn.length-1]}`, resp);
-        
-    }
+        try {
+            const fileUrlSplit = fileList[index].split('/');
+            const fn = fileUrlSplit[fileUrlSplit.length-1];
     
+            const stream = fs.createWriteStream(`./census_data_new/${fn}`);
+            const { body } = await fetch(fileList[index]);
+            await finished(Readable.fromWeb(body).pipe(stream));
+            
+        } catch (error) {
+            continue;
+        }
+        
+    }   
 }
 
 async function getData(){
@@ -40,10 +48,9 @@ async function run(){;
         fileList.push(data);
     }
 
-    let stringified = JSON.stringify(fileList)
-    await writeFile('./census_filelist.json',stringified);
-
-    stringified = ''; // release memory.
+    // let stringified = JSON.stringify(fileList)
+    // await writeFile('./census_filelist.json',stringified);
+    // stringified = ''; // release memory.
 
     await downloadFiles(fileList.map(e=>e.l).flat());
 
