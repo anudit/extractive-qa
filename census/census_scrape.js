@@ -52,9 +52,11 @@ async function run(){;
     // await writeFile('./census_filelist.json',stringified);
     // stringified = ''; // release memory.
 
-    await downloadFiles(fileList.map(e=>e.l).flat());
+    await downloadFiles(fileList.map(e=>e.l).flat().slice(11620));
 
 }
 
 
 run();
+
+//11620

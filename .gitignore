@@ -10,5 +10,6 @@ dbsmall.csv
 *.xlsx
 *.XLSX
 *.pdf
-/census/census_data
+/census/census_csvs
 /census/census_data_new
+*.zip
