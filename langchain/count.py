@@ -27,5 +27,6 @@ print('total_tokens:', total_tokens)
 
 # cost per 1k tokens = $0.4/1M
 # 
+# found 34,041,237 docs
 # 9,613,526,181 total, 282.4 tokens avg
 # 0.4 * 9,613 = 3845
