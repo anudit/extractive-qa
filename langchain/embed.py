@@ -20,14 +20,14 @@ print('found', len(docs), 'docs')
 
 embeddings = HuggingFaceEmbeddings()
 
-# db = FAISS.from_documents(docs, embeddings)
-# db.save_local("./faiss_index")
+db = FAISS.from_documents(docs, embeddings)
+db.save_local("./faiss_index")
 
-deeplake_path = 'hub://anudit/test_csv'
-dl = DeepLake(
-    dataset_path=deeplake_path, 
-    token=os.environ['DEEPLAKE_API_TOKEN'], 
-    embedding_function=embeddings
-)
+# deeplake_path = 'hub://anudit/test_csv'
+# dl = DeepLake(
+#     dataset_path=deeplake_path, 
+#     token=os.environ['DEEPLAKE_API_TOKEN'], 
+#     embedding_function=embeddings
+# )
 
-dl.add_documents(docs)
+# dl.add_documents(docs)
