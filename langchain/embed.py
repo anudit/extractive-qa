@@ -13,22 +13,21 @@ from tqdm import tqdm
 from langchain.vectorstores import FAISS
 
 print('Loading directory')
-loader = DirectoryLoader('../census/census_csvs', glob="**/1991-B*.csv", loader_cls=CSVLoader)
+loader = DirectoryLoader('../census/census_csvs', glob="**/*.csv", loader_cls=CSVLoader)
 print('Loading data')
 docs = loader.load()
 print('found', len(docs), 'docs')
 
 embeddings = HuggingFaceEmbeddings()
 
-db = FAISS.from_documents(docs, embeddings)
-db.save_local("./faiss_index")
+# db = FAISS.from_documents(docs, embeddings)
+# db.save_local("./faiss_index")
 
-# deeplake_path = 'hub://anudit/test_csv'
-# dl = DeepLake(
-#     dataset_path=deeplake_path, 
-#     token=config['DEEPLAKE_API_TOKEN'], 
-#     embedding_function=embeddings
-# )
+deeplake_path = 'hub://anudit/test_csv'
+dl = DeepLake(
+    dataset_path=deeplake_path, 
+    token=os.environ['DEEPLAKE_API_TOKEN'], 
+    embedding_function=embeddings
+)
 
-# for ind, doc in tqdm(enumerate(docs)):
-#     dl.add_documents([doc])
+dl.add_documents(docs)
