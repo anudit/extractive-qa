@@ -1,6 +1,9 @@
 import os
 from dotenv import load_dotenv
+
 load_dotenv('../.env')
+os.environ['NUMEXPR_MAX_THREADS'] = '12'
+os.environ['NUMEXPR_NUM_THREADS'] = '12'
 
 import logging
 logging.basicConfig(level=logging.DEBUG)
@@ -13,7 +16,7 @@ from tqdm import tqdm
 from langchain.vectorstores import FAISS
 
 print('Loading directory')
-loader = DirectoryLoader('../census/census_csvs', glob="**/*.csv", loader_cls=CSVLoader)
+loader = DirectoryLoader('../census/census_csvs', glob="**/1991-B02T-*.csv", loader_cls=CSVLoader)
 print('Loading data')
 docs = loader.load()
 print('found', len(docs), 'docs')

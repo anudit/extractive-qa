@@ -1,5 +1,7 @@
-sentence-transformers
-faiss-cpu
+torch==1.13.1
+torchvision==0.14.1 
+sentence-transformers==2.2.2
+faiss-cpu==1.7.3
 langchain
 openai
 deeplake
