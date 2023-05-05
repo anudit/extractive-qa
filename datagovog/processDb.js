@@ -3,13 +3,28 @@ import { open, writeFile } from 'fs/promises';
 function sum(ar) {
     var sum = 0;
     for (var i = 0; i < ar.length; i++) {
-      if(typeof ar[i] == `number`) sum += ar[i];
+      if(Number.isFinite(ar[i])) sum += ar[i];
     }
     return sum;
-  }
+}
+
+const getUrlExtension = (url = "") => {
+    try {
+        const parts = url.split('.')
+        let extension = parts[parts.length-1].toLowerCase()
+        if (extension.includes('?')) {
+            let newParts = extension.split('?')
+            extension = newParts[0]
+        }
+        return extension;
+    } catch (error) {
+        return ''
+    }
+    
+}
  
 async function read() {
-    const file = await open('/Users/anudit/Downloads/datagovcomplete.csv');
+    const file = await open('./datagovlinks.csv');
     let datafiles = [];
     let totalRows = 0;
 
@@ -30,17 +45,24 @@ async function read() {
     datafiles = datafiles.filter(e=>e.df!="false").filter(e=>Boolean(e.df));
 
     let fsSum = sum(datafiles.map(e=>parseInt(e.fs)).filter(Boolean));
+    let fsSumCsv = sum(datafiles.filter(e=>getUrlExtension(e.df)=='csv').map(e=>parseInt(e.fs)));
 
     const stats = {}
     for (let index = 0; index < datafiles.length; index++) {
         const filename = datafiles[index]['df'].split('.');
         if (filename){
-            const extension = filename[filename.length-1].toLowerCase()
+            const extension = getUrlExtension(datafiles[index]['df'])
             if (Object.keys(stats).includes(extension)) stats[extension]+=1
             else stats[extension]=1
         }
     }
-    console.log({...stats, totalRows, valid: datafiles.length, fsSum: parseInt(fsSum/(1000*1000*1000)) + ' GB'});
+    console.log({
+        ...stats, 
+        totalRows, 
+        valid: datafiles.length, 
+        fsSum: parseInt(fsSum/(1000*1000*1000)) + ' GB',
+        fsSumCsv: parseInt(fsSumCsv/(1000*1000*1000)) + ' GB'
+    });
 
     let stringified = JSON.stringify(datafiles)
     await writeFile('./datafile.json',stringified);

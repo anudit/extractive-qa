@@ -6,22 +6,22 @@ from pprint import pprint
 
 def store_secondlevel(db):
 
-    file1 = open("secondlevel3.json", "w")
+    file1 = open("./secondlevel.json", "w")
     file1.write(json.dumps(db))
     file1.close()
 
 def get_page_summary(url):
 
     try:    
-        r = requests.get(url, timeout=60)
+        r = requests.get(url, timeout=20)
 
         if (r.status_code == 200):
             soup = BeautifulSoup(r.text, 'html.parser')
             links = soup.find_all('a');
             pdf_links = []
             for link in links:
-                l =link.get('href')
-                if '.pdf' in l:
+                l =link.get('href').lower()
+                if '.pdf' in l or '.csv' in l:
                     if 'http' in l:
                         pdf_links.append(l)
                     else:
@@ -38,7 +38,7 @@ def get_page_summary(url):
 def get_page(link):
 
     try:
-        r = requests.get(link, timeout=60)
+        r = requests.get(link, timeout=20)
 
         if (r.status_code == 200):
             soup = BeautifulSoup(r.text, 'html.parser')
@@ -94,7 +94,7 @@ def get_page(link):
 
 def get_all_pages():
 
-    f = open('./firstlevel.json')
+    f = open('./firstlevel-1.json')
     data = json.load(f)
     f.close()
 

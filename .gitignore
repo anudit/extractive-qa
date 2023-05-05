@@ -13,3 +13,6 @@ dbsmall.csv
 /census/census_csvs
 /census/census_data_new
 *.zip
+*.log
+*.faiss
+*.pkl

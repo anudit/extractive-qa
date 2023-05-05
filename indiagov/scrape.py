@@ -5,7 +5,7 @@ import json
 
 def store_firstlevel(db):
 
-    file1 = open("firstlevel.json", "w")
+    file1 = open("./firstlevel-1.json", "w")
     file1.write(json.dumps(db))
     file1.close()
 
@@ -49,7 +49,7 @@ def get_page(page_number):
 
 def get_all_pages():
     complete = []
-    for i in tqdm(range(0, 185)):
+    for i in tqdm(range(0, 200)):
         page_links = get_page(i)
         complete = [*complete, *page_links]
 

@@ -1,5 +1,5 @@
 from transformers import pipeline
-from extract import dir_search, get_corpus 
+from archive.extract import dir_search, get_corpus 
 
 # https://github.com/huggingface/transformers/tree/main/examples/research_projects/distillation
 # distilbert-base-cased-distilled-squad

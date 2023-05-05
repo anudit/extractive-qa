@@ -82,7 +82,7 @@ async function run(){
 run()
 
 
-//  CSV
+//  CSV ----  manually run on data.gov
 
 let LIMIT = 1000;
 let csv = ``;

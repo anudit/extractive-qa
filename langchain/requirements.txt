@@ -6,3 +6,4 @@ langchain
 openai
 deeplake
 python-dotenv
+pypdf

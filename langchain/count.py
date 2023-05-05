@@ -30,3 +30,7 @@ print('total_tokens:', total_tokens)
 # found 34,041,237 docs
 # 9,613,526,181 total, 282.4 tokens avg
 # 0.4 * 9,613 = 3845
+
+# 1 => 3.642kb
+# 28,000 => 100.2MB
+# found 34,041,237 docs

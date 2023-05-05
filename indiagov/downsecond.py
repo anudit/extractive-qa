@@ -10,17 +10,18 @@ def load_json(path):
     f.close()
     return data
 
-STORAGE_DIR = './schemes'
+STORAGE_DIR = './downloaded'
 
 def download_schemes():
     schemes = load_json('./secondlevel.json')
     for scheme in tqdm(schemes):
-        ext_link = scheme[3].strip()
-        if ext_link.endswith('.pdf'):
+        ext_link = scheme[3].strip().lower()
+        if ext_link.endswith('.pdf') or ext_link.endswith('.csv'):
             try:
+                file_extension = ext_link.split('.')[-1]
                 myfile = requests.get(ext_link, allow_redirects=True)
                 if (myfile.status_code == 200):
-                    open(path.join(STORAGE_DIR, scheme[0]+'.pdf'), 'wb').write(myfile.content)
+                    open(path.join(STORAGE_DIR, scheme[0]+f'.{file_extension}'), 'wb').write(myfile.content)
             except:
                 continue
             
